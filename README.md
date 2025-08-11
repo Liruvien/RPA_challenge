@@ -1,44 +1,69 @@
 RPA Challenge
 
-Automatyczny skrypt do wypełniania formularzy z danymi z pliku Excel na stronie rpachallenge.com.
+Automatyzacja skryptu do wypełniania formularza danymi z pliku excel, odbywa sie na stronie https://rpachallenge.com
+
+Repozytorium zawiera dwa podejścia do rozwiązania zadania automatyzacji:
+- Wersja Python – w pełni działający skrypt automatyzujący proces (folder 'python_version').  
+- Wersja UiPath – próba implementacji tego samego procesu w narzędziu UiPath (folder 'uipath_version').  
+   Ta wersja nie jest w pełni funkcjonalna, lecz zawiera screenshot workflow oraz diagram procesu jako dokumentację podejścia.
+
+Skrypt:
+- otwiera przeglądarkę Google Chrome,
+- pobiera lub wczytuje plik z danymi 'challenge.xlsx',
+- automatycznie wypełnia formularz na stronie,
+- zapisuje wynik końcowy do pliku tekstowego 'wynik.txt'.
 
 Wymagania:
-System: Linux (testowane na Ubuntu)
-Google Chrome musi być zainstalowany!
-Plik wykonywalny znajduje się w katalogu 'dist/'
 
-*wersja na windows w toku*
+System operacyjny:
+  - Linux (testowane na Ubuntu) 
+  lub
+  - Windows (testowane na Windows 10)
+- Google Chrome zainstalowany w systemie
+- Python 3.10+ zainstalowany w systemie (na systemie linux)
+- Dostęp do internetu podczas działania skryptu do otwarcia rpachallenge.com
+- Zainstalowane pakiety z 'requirements.txt'
 
-Jak uruchomić:
-1. Otwórz terminal.
-2. Przejdź do katalogu projektu, np.:
-cd ~/RPA_challenge
+Uwaga: 
+Gotowy plik wykonywalny ('.exe' na Windows lub plik binarny na Linux) nie jest dołączony do repozytorium. Należy go wygenerować lokalnie zgodnie z poniższą instrukcją.
 
-3. Przejdź do katalogu z plikiem:
-cd python_version/script/dist
+Uruchomienie na Windows (generowanie i uruchomienie pliku .exe)
+0. Pobierz repozytorium
+1. Przejdź do katalogu ze skryptem
+cd C:\ścieżka\do\RPA_challenge\python_version\script
+2. Aktywuj środowisko virtualne (opcjonalnie) 
+.\venv\Scripts\Activate
+3. Zainstaluj wymagane pakiety
+pip install -r ..\requirements.txt
+4. Wygeneruj plik .exe
+pyinstaller --onefile rpachallenge.py
 
-4. Uruchom program:
-./rpachallenge
+Plik powstanie tutaj:
+dist\rpachallenge.exe
 
-Jeśli pojawi się komunikat o braku uprawnień: 'chmod +x rpachallenge' aby nadać prawa uruchomienia.
+5. Uruchom program
+.\dist\rpachallenge.exe
 
-5. Skrypt pobierze dane z rpachallenge.com, uzupełni formularze i zapisze wynik w pliku 'wynik.txt'.
 
-Informacje dodatkowe:
+Uruchomienie na Linux (generowanie i uruchomienie pliku binarnego):
+0. Pobierz repozytorium
+1. Przejdź do katalogu ze skryptem
+cd ~/RPA_challenge/python_version/script
+2. Aktywuj środowisko virtualne (opcjonalnie) 
+source ../venv/bin/activate
+3. Zainstaluj wymagane pakiety
+pip install -r ../requirements.txt
+4. Wygeneruj plik binarny
+pyinstaller --onefile rpachallenge.py
 
-W przypadku problemów z przeglądarką Chrome – upewnij się, że jest zainstalowana najnowsza wersja Google Chrome.
-Jeśli pojawią się błędy, sprawdź wymagania i komunikaty w terminalu.
-Aplikacja była budowana za pomocą PyInstaller.
+Plik powstanie tutaj:
+dist/rpachallenge
 
-Uruchamianie aplikacji:
-Zainstaluj systemowe wymagania (np. Chrome, Python 3.12).
+5. Nadaj prawo wykonywania (opcjonalnie):
+chmod +x dist/rpachallenge
+6. Uruchom program
+./dist/rpachallenge
 
-Utwórz i aktywuj środowisko virtualne:
-python3 -m venv venv
-source venv/bin/activate
-
-Zainstaluj zależności:
-pip install -r requirements.txt
-
-Uruchom PyInstaller:
-pyinstaller --onefile --name rpachallenge rpachallenge.py
+Dodatkowo:
+W repozytorium dołączony jest plik rpachallenge.spec służący do zbudowania programu z wcześniej przygotowanymi ustawieniami, można go użyć poleceniem:
+pyinstaller rpachallenge.spec
